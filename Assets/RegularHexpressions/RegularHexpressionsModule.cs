@@ -137,9 +137,119 @@ public class RegularHexpressionsModule : MonoBehaviour
 	{
 		return string.Format("[Regular Hexpressions #{0}]", _moduleId);
 	}
-
-	void Update()
+	
+#pragma warning disable 414
+	private const string TwitchHelpMessage =
+		"Use !{0} press U D F B L R, to press the button(s) corresponding to that face of the hexahedron. Use !{0} cycle U B R, to cycle the U, B, or R face(s). You can cycle U, B, or R. Submit your answer using !{0} submit.";
+#pragma warning restore 414
+	
+	private IEnumerator ProcessTwitchCommand(string command)
 	{
+		command = command.ToLowerInvariant().Trim();
+	
+		if (command.EqualsAny("submit", "press submit", "check"))
+		{
+			yield return null;
+			submitButton.OnInteract();
+			yield break;
+		}
+	
+		if (command.StartsWith("press"))
+		{
+			var parts = command.Split(' ');
+			var selectables = new List<KMSelectable>();
+	
+			for (int i = 1; i < parts.Length; i++)
+			{
+				switch (parts[i])
+				{
+					case "u":
+						selectables.Add(faceButtonU);
+						break;
+					case "d":
+						selectables.Add(faceButtonD);
+						break;
+					case "f":
+						selectables.Add(faceButtonF);
+						break;
+					case "b":
+						selectables.Add(faceButtonB);
+						break;
+					case "l":
+						selectables.Add(faceButtonL);
+						break;
+					case "r":
+						selectables.Add(faceButtonR);
+						break;
+					default:
+						yield return string.Format("sendtochaterror Do you honestly expect me to know what {0} means? 4Head",
+							parts[i].ToUpperInvariant());
+						yield break;
+				}
+			}
 
+			if (!selectables.Any())
+			{
+				yield return "sendtochaterror Maybe you should tell me what to press. Kappa";
+				yield break;
+			}
+
+			yield return null;
+			
+			foreach (var selectable in selectables)
+			{
+				yield return "trycancel";
+				selectable.OnInteract();
+				yield return new WaitForSeconds(1f);
+			}
+			
+			yield break;
+		}
+
+		if (command.StartsWith("cycle"))
+		{
+			var parts = command.Split(' ');
+			var selectables = new List<KMSelectable>();
+			
+			for (int i = 1; i < parts.Length; i++)
+			{
+				switch (parts[i])
+				{
+					case "u":
+						selectables.Add(faceButtonU);
+						break;
+					case "b":
+						selectables.Add(faceButtonB);
+						break;
+					case "r":
+						selectables.Add(faceButtonR);
+						break;
+					default:
+						yield return string.Format("sendtochaterror Sorry, I can't cycle the {0} face.",
+							parts[i].ToUpperInvariant());
+						yield break;
+				}
+			}
+			
+			if (!selectables.Any())
+			{
+				yield return "sendtochaterror Maybe you should tell me what to cycle. Kappa";
+				yield break;
+			}
+
+			yield return null;
+
+			foreach (var selectable in selectables)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					yield return new WaitForSeconds(3f);
+					selectable.OnInteract();
+					yield return "trycancel";
+				}
+				yield return new WaitForSeconds(1f);
+				yield return "trycancel";
+			}
+		}
 	}
 }
