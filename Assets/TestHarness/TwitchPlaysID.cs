@@ -171,8 +171,6 @@ public class TwitchPlaysID : MonoBehaviour
 
 	private void Start()
 	{
-		// TODO remove
-
 		if (TPCoroutineQueue == null)
 			TPCoroutineQueue = new GameObject().AddComponent<TPCoroutineQueue>();
 
