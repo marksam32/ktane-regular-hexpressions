@@ -139,8 +139,11 @@ public class RegularHexpressionsModule : MonoBehaviour
 	}
 	
 #pragma warning disable 414
-	private const string TwitchHelpMessage =
-		"Use !{0} press U D F B L R TM BM TL TR BL BR, to press the button(s) corresponding to that face of the hexahedron, or the button's position. Use !{0} cycle U B R TM BL BR, to cycle the corresponding face(s), or use the button's position. You can cycle U, B, or R. Submit your answer using !{0} submit.";
+	private const string TwitchHelpMessage = @"Use !{0} press TL TM TR BL BM BR,
+ to press the top-left/middle/right and bottom-left/middle/right buttons.
+ (Alternatively, you can press buttons by face: !{0} press L U F B D R.)
+ Use !{0} cycle TM BL BR, or !{0} cycle U B R, to cycle the corresponding buttons/faces.
+ Submit your answer using !{0} submit.";
 #pragma warning restore 414
 	
 	private IEnumerator ProcessTwitchCommand(string command)
