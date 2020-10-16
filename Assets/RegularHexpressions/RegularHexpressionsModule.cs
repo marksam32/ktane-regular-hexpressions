@@ -140,7 +140,7 @@ public class RegularHexpressionsModule : MonoBehaviour
 	
 #pragma warning disable 414
 	private const string TwitchHelpMessage =
-		"Use !{0} press U D F B L R TM BM BL BR TL TR, to press the button(s) corresponding to that face of the hexahedron, or the button's position. Use !{0} cycle U B R TM TL TR, to cycle the corresponding face(s), or use the button's position. You can cycle U, B, or R. Submit your answer using !{0} submit.";
+		"Use !{0} press U D F B L R TM BM TL TR BL BR, to press the button(s) corresponding to that face of the hexahedron, or the button's position. Use !{0} cycle U B R TM BL BR, to cycle the corresponding face(s), or use the button's position. You can cycle U, B, or R. Submit your answer using !{0} submit.";
 #pragma warning restore 414
 	
 	private IEnumerator ProcessTwitchCommand(string command)
@@ -172,19 +172,19 @@ public class RegularHexpressionsModule : MonoBehaviour
 						selectables.Add(faceButtonD);
 						break;
 					case "f":
-					case "br":
+					case "tr":
 						selectables.Add(faceButtonF);
 						break;
 					case "b":
-					case "tl":
+					case "bl":
 						selectables.Add(faceButtonB);
 						break;
 					case "l":
-					case "bl":
+					case "tl":
 						selectables.Add(faceButtonL);
 						break;
 					case "r":
-					case "tr":
+					case "br":
 						selectables.Add(faceButtonR);
 						break;
 					default:
@@ -226,11 +226,11 @@ public class RegularHexpressionsModule : MonoBehaviour
 						selectables.Add(faceButtonU);
 						break;
 					case "b":
-					case "tl":
+					case "bl":
 						selectables.Add(faceButtonB);
 						break;
 					case "r":
-					case "tr":
+					case "br":
 						selectables.Add(faceButtonR);
 						break;
 					default:
